@@ -2,17 +2,17 @@ name: Deploy Contoso_University_Core
 
 on:
   workflow_run:
-    workflows: ["Pack Contoso_University_Core"]
+    workflows: ["Pack Conotoso_University_Core"]
     branches: [main]
-    types:
+    types: 
       - completed
   workflow_dispatch:
-
+    
 jobs:
   deploy:
     runs-on: windows-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    environment: QA
+    environment: production
     steps:
       - uses: dawidd6/action-download-artifact@v2
         with:
@@ -20,7 +20,7 @@ jobs:
           name: packed-solution
       - uses: microsoft/powerplatform-actions/import-solution@v0
         with:
-          environment-url: https://org0fa89477.crm.dynamics.com/
+          environment-url: https://org7b6142c7.crm.dynamics.com
           user-name: ${{ secrets.USERNAME }}
           password-secret: ${{ secrets.PASSWORD }}
           solution-file: contoso_university_core.zip
